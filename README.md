@@ -64,6 +64,10 @@ data () {
   }
 ```
 
+![avatar](https://github.com/lucky51/vue-am-pagination/blob/master/images/am-pagination.jpg?raw=true)
+
+![avatar](https://github.com/lucky51/vue-am-pagination/blob/master/images/am-pagination1.png?raw=true)
+
 ## Properties
 
 | Property | Type | Default |
