@@ -5,6 +5,12 @@ A Plugin for pagination
 
 ## Usage
 
+install by npm
+
+```md
+npm install vue-am-pagination@latest
+```
+
 ```html
 <div id="app">
       <am-pagination 
@@ -64,8 +70,6 @@ data () {
   }
 ```
 
-![avatar](https://github.com/lucky51/vue-am-pagination/blob/master/images/am-pagination.jpg?raw=true)
-
 ![avatar](https://github.com/lucky51/vue-am-pagination/blob/master/images/am-pagination1.png?raw=true)
 
 ## Properties
@@ -93,3 +97,6 @@ data () {
 |next-class|String|next|
 |last-class|String|last|
 |first-class|String|first|
+
+
+![avatar](https://github.com/lucky51/vue-am-pagination/blob/master/images/am-pagination.jpg?raw=true)
