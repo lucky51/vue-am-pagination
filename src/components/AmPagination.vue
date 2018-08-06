@@ -10,7 +10,7 @@
                 <a href="#" class="p-link">{{fir+1}}</a>
             </slot>
         </li>
-        <li class="ellipses" v-if="!(boundaryPages>0&&boundaryPages=== pageArea[0]) " @click="loadMores(0)" key="keyprevmores"  v-show="showPrevEllipses">...</li>
+        <li class="ellipses"  @click="loadMores(0)" key="keyprevmores"  v-show="showPrevEllipses">...</li>
        
         <li   v-for="item in (pageArea)"  @click="selPage(item)"  :class="item==pIndex?activeClass:''" :key="item">           
             <slot :index="item">
@@ -18,7 +18,7 @@
             </slot>
         </li>
         
-        <li class="ellipses" @click="loadMores(666666)" v-if="!(boundaryPages>0&&pageArea[pageArea.length-1]+1===pageCount.length-boundaryPages)"  key="keynextmores" v-show="showNextEllipses">...</li>
+        <li class="ellipses" @click="loadMores(666666)"   key="keynextmores" v-show="showNextEllipses">...</li>
         <li  v-if="boundaryLast" @click="selPage(last)" :class="last==pIndex?activeClass:''" v-for="last in boundaryLast" :key="'key'+last">
             <slot :index="last" name="boundary-last-numbers">
                 <a href="#" class="p-link">{{last+1}}</a>
@@ -277,9 +277,23 @@ export default {
            return [ ...Array(Math.ceil(this.totals/this.pSize)).keys()];
         },
         showPrevEllipses(){
+          if(this.boundaryPages>0&&this.boundaryPages=== this.pageArea[0]){
+              return false;
+          }
+          if(!this.pageArea||this.pageArea.length===0){
+              return false;
+          }
           return this.forceEllipses  && this.prevMores;
         },
         showNextEllipses(){
+
+            //v-if="!(boundaryPages>0&&pageArea[pageArea.length-1]+1===pageCount.length-boundaryPages)  "
+            if(this.pageArea &&this.boundaryPages >0&&this.pageArea[this.pageArea.length-1]+1===this.pageCount.length-this.boundaryPages){
+                return false;
+            }
+            if(!this.pageArea || this.pageArea.length===0){
+                return false;
+            }
           return this.forceEllipses && this.nextMores;
         }       
     }

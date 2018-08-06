@@ -29,7 +29,7 @@
            {{index + 1 }}
          </a>
       </am-pagination>
-     
+    
     </div>
     <div>
       <button @click="moveTo">move to {{current}}</button>
@@ -44,10 +44,7 @@
     <button @click="switchforceEllipses">switch force  ellipses :  {{forceEllipses}}</button>
     <input type="text" v-model="active" />
    <span>{{'page totals:' + pagetotal }}</span>
-    </div>
-      
-   
-     
+    </div>   
   </div>  
 </template>
 
@@ -69,7 +66,7 @@ export default {
      
     },
     chtotal(){
-      this.totals = _.random(0,10000);
+      this.totals = _.random(0,100);
     },
     switchrotate(){
       this.rotate =  !this.rotate;
@@ -78,7 +75,7 @@ export default {
       this.boundaryPages = _.random(0,this.maxSize-1);
     },
     changeMaxSize(){
-      this.maxSize = _.random(1,15);
+      this.maxSize = _.random(1,8);
       this.boundaryPages = _.random(0,this.maxSize-1);
     },
     switchboundaryLinks(){
@@ -106,7 +103,12 @@ export default {
       boundaryLinks:false,
       forceEllipses:true,
       directionLinks:true,
-      active:"active-green"
+      active:"active-green",
+      lis:[
+        {a:'a1',b:2,c:3},
+        {a:'a2',b:2,c:3},
+        {a:'a3',b:2,c:3}
+      ]
     
     }
   },components: {
