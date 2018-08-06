@@ -10,14 +10,14 @@
                 <a href="#" class="p-link">{{fir+1}}</a>
             </slot>
         </li>
-        <li class="ellipses" v-if="!(boundaryPages>0&&boundaryPages=== pageArea[0])" @click="loadMores(0)" key="keyprevmores"  v-show="showPrevEllipses">...</li>
-        <transition-group  name="slide">
+        <li class="ellipses" v-if="!(boundaryPages>0&&boundaryPages=== pageArea[0]) " @click="loadMores(0)" key="keyprevmores"  v-show="showPrevEllipses">...</li>
+       
         <li   v-for="item in (pageArea)"  @click="selPage(item)"  :class="item==pIndex?activeClass:''" :key="item">           
             <slot :index="item">
                 <a href="#" class="p-link">{{item +1 }}</a>
             </slot>
         </li>
-        </transition-group>
+        
         <li class="ellipses" @click="loadMores(666666)" v-if="!(boundaryPages>0&&pageArea[pageArea.length-1]+1===pageCount.length-boundaryPages)"  key="keynextmores" v-show="showNextEllipses">...</li>
         <li  v-if="boundaryLast" @click="selPage(last)" :class="last==pIndex?activeClass:''" v-for="last in boundaryLast" :key="'key'+last">
             <slot :index="last" name="boundary-last-numbers">
@@ -53,7 +53,7 @@ export default {
         },
         maxSize:{
             type:Number,
-            default:7
+            default:5
         },
         rotate:{
             type:Boolean,
@@ -207,7 +207,7 @@ export default {
     },
     computed: {
         boundaryFirst(){
-           if( this.boundaryPages>0 && this.boundaryPages<this.maxSize && this.prevMores){
+           if( this.boundaryPages>0 && this.boundaryPages<this.maxSize && this.prevMores && this.pageCount.length>=this.boundaryPages*2){
                return [...Array(this.boundaryPages).keys()];
            }
            else {
@@ -216,7 +216,7 @@ export default {
         },
         boundaryLast(){
             var result = [];
-            if(this.boundaryPages>0 && this.boundaryPages <this.maxSize &&this.nextMores){
+            if(this.boundaryPages>0 && this.boundaryPages <this.maxSize &&this.nextMores && this.pageCount.length>=this.boundaryPages*2){
                 for (let l = this.pageCount.length-this.boundaryPages; l < this.pageCount.length;l++){  
                     result.push(l);
                 }
@@ -240,12 +240,12 @@ export default {
                 if(this.rotate){
                     var half = this.maxSize % 2 ===0 ?this.maxSize /2 :Math.floor(this.maxSize /2);
                         begin = this.pIndex - half  ;
-                        if(this.boundaryPages > 0 ){
+                        if(this.boundaryPages > 0 && this.pageCount.length>=this.boundaryPages*2){
                             begin = begin <= this.boundaryPages-1 ?this.boundaryPages :begin;
                         }
                         end = begin <0 ? this.maxSize : (begin+this.maxSize);
                         begin = end >this.pageCount.length  ?this.pageCount.length -this.maxSize :begin;
-                        if(this.boundaryPages>0){
+                        if(this.boundaryPages>0 && this.pageCount.length>=this.boundaryPages*2){
                             end = end > this.pageCount.length -this.boundaryPages ?this.pageCount.length -this.boundaryPages:end;
                             begin = end - this.maxSize;
                             if(begin<=this.boundaryPages-1){
@@ -270,8 +270,7 @@ export default {
                 this.prevMores = true;
             }          
           }        
-          for (let p = begin; p < end; p++) arr.push(p); 
-          
+          for (let p = begin; p < end; p++) arr.push(p);         
           return arr; 
         },
         pageCount(){     
